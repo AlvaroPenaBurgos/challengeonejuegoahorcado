@@ -1,0 +1,209 @@
+<meta charset="UTF-8">
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="css.css">
+
+</head>
+
+<body>
+    <h1> AHORCADO </h1>
+    <br>
+    <br>
+
+    <canvas width="1000" height="400"></canvas>
+    <br>
+    <br>
+    <input type="text" style="text-transform:uppercase;" value=""
+        onkeyup="javascript:this.value=this.value.toUpperCase();">
+    <br>
+    <br>
+    <a href="#" class="button1" onclick="comparar()">Aceptar </a>
+    <a href="#" class="button2" onclick="resetear()">Resetear </a>
+    <br>
+    <br>
+
+    <footer>
+        <p>Autor:De este sitio Web<br>
+            <a href="https://acortar.link/dq1xAb">Alvaro Peña Burgos</a>
+        </p>
+    </footer>
+
+
+</body>
+
+
+
+<script>
+
+    var pantalla = document.querySelector("canvas");
+    var pincel = pantalla.getContext("2d");
+    var letraFalsa = "";
+
+    var frases = ['OJO', 'ALURA', 'CABELLO', 'JAVA'];
+    var fra = "";
+    var cor = 50;
+    var vidas = 8;
+    var ganar;
+
+    function obtenerFrase() {
+        var posicion = Math.round(Math.random() * frases.length);
+
+
+        for (var i = 0; i < frases.length; i++) {
+            if (i == posicion) {
+
+                fra = frases[i];
+            }
+        }
+    }
+
+
+    function dibujarRayas(x, y, color) {
+        pincel.fillStyle = color;
+        pincel.fillRect(x, y, 50, 10);
+        //pincel.strokeStyle = "black";
+        pincel.strokeRect(x, y, 20, 10)
+    }
+
+    function dibujarAhorcado(x, y, an, vo, color) {
+
+        pincel.fillStyle = color;
+        pincel.fillRect(y, x, an, vo);
+
+    }
+
+    function resetear() {
+        location.reload();
+    }
+
+    function dibujar() {
+        let txt = fra;
+        let leng = txt.length;
+        ganar = leng;
+        var x = 50;
+
+        for (var i = 0; i < leng; i++) {
+            dibujarRayas(x, 300, "black");
+            x = x + 100;
+        }
+    }
+    function dibujarCirculo(x, y, radio, color) {
+        pincel.fillStyle = color;
+        pincel.beginPath();
+        pincel.arc(x, y, radio, 0, 2 * 3.14);
+        pincel.fill();
+    }
+
+    function escribirTexto(x, y, texto, color) {
+        pincel.font = "90px Georgia";
+        pincel.fillStyle = color;
+        pincel.fillText(texto, x, y);
+    }
+
+    function comparar() {
+
+        let txt = fra;
+        let leng = txt.length;
+        var encontrado = true;
+
+
+
+        var input = document.querySelector("input");
+        if (ganar == 1) {
+            alert("FELICIDADES GANASTE");
+        } 
+        for (var i = 0; i < leng; i++) {
+            if (txt[i] == input.value) {
+                if (i == 0) {
+                    escribirTexto(cor, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 1) {
+                    escribirTexto(cor + 100, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 2) {
+                    escribirTexto(cor + 200, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 3) {
+                    escribirTexto(cor + 300, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 4) {
+                    escribirTexto(cor + 400, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 5) {
+                    escribirTexto(cor + 500, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 6) {
+                    escribirTexto(cor + 600, 299, input.value, "black");
+                    encontrado = false;
+                } else if (i == 7) {
+                    escribirTexto(cor + 700, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 8) {
+                    escribirTexto(cor + 800, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                } else if (i == 9) {
+                    escribirTexto(cor + 900, 299, input.value, "black");
+                    encontrado = false;
+                    ganar = ganar - 1;
+                }
+
+            }
+        }
+
+        
+        if (encontrado) {
+            vidas = vidas - 1;
+
+
+            letraFalsa = letraFalsa + input.value;
+            escribirTexto(300, 70, letraFalsa, "red");
+
+            if (vidas == 0) {
+                alert("GAME OVER");
+                encontrado = false;
+                resetear();
+            } else {
+                alert("Intento fallido: " + vidas);
+                if (vidas == 7) {
+                    dibujarAhorcado(0, 0, 10, 300, "black");
+                } else if (vidas == 6) {
+                    dibujarAhorcado(0, 0, 200, 10, "black");
+                } else if (vidas == 5) {
+                    dibujarAhorcado(0, 200, 10, 50, "red");
+                } else if (vidas == 4) {
+                    dibujarCirculo(208, 80, 30, "Moccasin");
+                    dibujarCirculo(190, 76, 5, "black");
+                    dibujarCirculo(220, 76, 5, "black");
+                    dibujarCirculo(207, 95, 5, "white");
+                } else if (vidas == 3) {
+                    dibujarCirculo(209, 140, 30, "Moccasin");
+                    dibujarAhorcado(120, 185, 50, 80, "Moccasin");
+                } else if (vidas == 2) {
+                    dibujarAhorcado(135, 170, 10, 65, "Moccasin");
+                    dibujarAhorcado(135, 238, 10, 65, "Moccasin");
+                } else if (vidas == 1) {
+                    dibujarAhorcado(200, 190, 10, 65, "Moccasin");
+                    dibujarAhorcado(200, 220, 10, 65, "Moccasin");
+                }
+                encontrado = false;
+
+            }
+
+        }
+        input.value = "";
+        input.focus();
+    }
+
+    obtenerFrase();
+    dibujar();
+
+</script>
